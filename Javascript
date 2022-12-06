@@ -1,0 +1,307 @@
+1.	What is Context in Javascript?
+2.	What are Constructors in Javascript?
+3.	What is Call Apply and Bind?
+4.	What is SetTimeout and ClearTimeout?
+5.	What are Prototypes in Javascript?
+6.	What is the difference between Proto and Prototype?
+7.	What is Prototype Inheritance Chain?
+8.	What is Synchronous and Asynchronous Code?
+9.	What is an Event Loop?
+10.	What is execution context in Javascript?
+11.	What is Creation phase and Execution phase in Javascript?
+12.	What is Scope in Javascript?
+13.	What is Hoisting in Javascript?
+14.	What are Closures in Javascript?
+15.	What is Currying in Javascript?
+What is Context in Javascript?
+Context is nothing but the value of this keyword in javascript. The this keyword basically refers to the object that the function is executing in.
+
+var person = {
+  name: "Aman",
+  age: 25,
+  hello: function(){
+    console.log(this);
+  }
+}
+
+person.hello();
+
+{name: "Abhishek", age: 25, hello: [Function: hello]}
+↥ back to top
+What are Constructors in Javascript?
+Constructors in Javascript are functions which are used to initialize a set of values or set default values for the objects.
+
+function Person(name, age, email) {
+  this.name = name;
+  this.age = age;
+  this.email = email;
+}
+
+var myself = new Person("Abhishek", 25, "abc@gmail.com");
+↥ back to top
+What is Call, Apply and Bind?
+The Call, Apply and Bind methods are generally used to set the value of this keyword irrespective of the way in which a function is called.
+
+Call()
+The call method executes the function with a given this value with arguments provided individually.
+
+var obj1 = {
+  num: 3,
+};
+
+var addTo = function (a, b, c) {
+  return this.num + a + b + c;
+};
+
+console.log(addTo.call(obj1, a, b, c));
+Apply()
+The apply method is exactly the same as the call method in functionality. The only difference is that the arguments are provided in an array.
+
+var obj2 = {
+  num: 3,
+};
+var addTo = function (a, b, c) {
+  return this.num + a + b + c;
+};
+
+var arr = [8, 8, 9];
+
+console.log(addTo.apply(obj2, arr));
+Bind()
+The bind method creates a new function that when called has it's this keyword set to the provided value.
+
+var obj3 = {
+  num: 3,
+};
+
+var addTo = function (a, b, c) {
+  return this.num + a + b + c;
+};
+
+var newFunc = addTo.bind(obj3);
+
+console.log(newFunc(8, 8, 9));
+↥ back to top
+What is SetTimeout and ClearTimeout?
+setTimeout()
+The SetTimeout function calls the function or evaluates the function after a specified number of milliseconds.
+
+setTimeout(function () {
+  console.log("Hello World!");
+}, 2000);
+
+//Hello World! will get printed after 2 seconds (2000 milliseconds).
+clearTimeout()
+The clearTimeout function stops the execution of the function specified in the setTimeout.
+
+var func = setTimeout(function () {
+  console.log("Hello World!");
+}, 2000);
+
+clearTimeout(func);
+
+//Nothing will get printed in the above case.
+↥ back to top
+What are Prototypes in Javascript?
+Prototypes are the mechanism through which Javascript objects inherits properties and methods from one another. Whenever a function is created in Javascript, the JS Engine adds a prototype property to the function.
+
+Array object inherits from Array.prototype
+Date object inherits from Date.prototype
+Person object inherits from Person.prototype
+↥ back to top
+What is the difference between Proto and Prototype?
+The main difference between the two is that prototype is a property of the constructor while __proto__ is a property of the instance of that constructor.
+
+var arr = ["Abhishek", "Aman"];
+
+arr.__proto__;
+//[constructor: ƒ, concat: ƒ, copyWithin: ƒ, fill: ƒ, find: ƒ, …]
+
+Array.prototype;
+//[constructor: ƒ, concat: ƒ, copyWithin: ƒ, fill: ƒ, find: ƒ, …]
+↥ back to top
+What is Prototype Inheritance Chain?
+Every object in Javascript eventually inherits the properties and methods from Object.prototype. This is called the Prototype chain. This is the reason why we say that almost everything in Javascript is an object.
+
+var arr = ["Abhishek", "Aman"];
+
+arr.__proto__;
+//[constructor: ƒ, concat: ƒ, copyWithin: ƒ, fill: ƒ, find: ƒ, …]
+
+arr.__proto__.__proto__;
+//{constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, …}
+
+arr.__proto__.__proto__.__proto__;
+//null
+In the above example we could see that the arr inherits its properties and methods from Array Constructor which in turn inherits its properties and methods from the Object Constructor which is then pointing to null. This is nothing but the Prototype Chain.
+
+↥ back to top
+What is Synchronous and Asynchronous Code?
+A synchronous code is a code in which the statements of the code are executed in sequence. Each statement waits for the previous statement to finish before executing.
+
+An asynchronous code is the one in which the next statement doesn't wait for the previous statement to finish executing.
+
+Synchronous
+
+var a = 10;
+function func() {
+  console.log(a);
+}
+func();
+
+Asynchronous
+
+console.log("start");
+
+setTimeout(function () {
+  console.log("The wait time is 2 seconds");
+}, 1000);
+
+console.log("end");
+
+// start
+// end
+// The wait time is 2 seconds
+↥ back to top
+What is an Event Loop?
+The event loop is the secret behind the Javascript asynchronous behaviour. The event loop is like an endless loop which keeps on checking whether there is something to be executed in the call stack. If the call stack is found to be empty, the event queue is checked. If there are some methods present in the event queue, then the methods are pushed one by one to the call stack where they are executed.
+
+↥ back to top
+What is Execution Context in Javascript?
+Execution context refers to the environment in which the code is executed. It is the execution context only which decides which piece of code has access to objects, functions, variables etc.
+
+The Execution context is divided into the following two
+
+Global Execution Context
+Functional Execution Context
+Global Execution Context
+Whenever your code runs for the very first time, it gets attached to the Global Context. There can only be one Global Execution Context in the entire process.
+
+Functional Execution Context
+Whenever the code is being executed and it encounters a function, then a functional execution context is created. There can be several functional Execution contexts depending on the number of functions.
+
+Screenshot
+
+↥ back to top
+What is Creation phase and Execution phase in Javascript?
+Creation phase
+In the creation phase, the compiler runs through the code twice before actually executing the code.
+
+In the first run, the compiler picks up all the functional declarations and stores them in the memory with their references.
+In the second run, the compiler picks up all the variable declarations and assigns undefined to them.
+Execution phase
+In the execution phase, the following 2 things happens
+
+The variables are assigned the values
+The functions are executed
+↥ back to top
+What is Scope in Javascript?
+Scope determines the place where the variables, functions or objects can be accessed.
+
+There are 2 types of Scope
+
+Global Scope
+Local Scope
+1. Global Scope
+The area outside all the functions is considered to be the global scope. The variables defined in the global scope can be accessed and altered in any other scopes. There is ony one global scope.
+
+var pi = 3.14;
+console.log(pi); // 3.14
+
+function getPi() {
+  console.log(pi);
+}
+
+getPi(); // 3.14
+2. Local Scope
+Variables that are declared inside the functions become local to the function and are thus accessible only inside their local scope. Every function has its own local Scope.
+
+Local Scope further can be divided into 2
+
+Functional scope
+Block Scope
+Functional Scope
+Whenever you declare a variable inside of a function, the variable is accessible within the function only. You cannot access the variable outside of the function. var is the keyword used to define the variable with functional scope.
+
+function func() {
+  var x = 10;
+  console.log(x);
+}
+
+console.log(x); // ReferenceError: x is not defined
+func(); // 10
+Block Scope
+A block scope is the area which is enclosed by the {} brackets. The statements such as if, switch, for, while etc. generally start with the curly brackets, and hence constitute a block. In ES6, the introduction of let and const was done which is used to define a block. The variables are thus not accessible outside of the block.
+
+function foo() {
+  if (true) {
+    var x = 11;
+    let y = 12;
+    console.log(x); // 11
+    console.log(y); // 12
+  }
+  console.log(x); // 11
+  console.log(y); // ReferenceError: y is not defined
+}
+foo();
+↥ back to top
+What is Hoisting in Javascript?
+In Javascript, during the creation phase, all the functional and variable declarations are moved to the top of the scope. So if a variable is defined inside of a function, then it moves to the top of the functional/local scope whereas when the variable is defined globally, it moves to the top of the global scope.
+
+Example-1
+
+console.log(x); // undefined
+var x = 10;
+In the above example, the variable x is hoisted to the top of the global scope and hence is assigned a value of undefined because the console.log statement is before the assignment to value 10 in the code.
+
+Example-2
+
+func();
+var x = 10;
+function func() {
+  var y = 20;
+  console.log(x); // undefined
+  console.log(y); // 20
+}
+In this particular example, there are 2 things happening, first the function func and the variables x and y are hoisted to the top of their scope ( x to the global and y to the local). After that, when the function func is being called, it has access to the function now, hence it executes the function, but till then x is not assigned a value of 10, so it gets printed to be undefined while y being on top of local scope gets printed to be 20.
+
+↥ back to top
+What are Closures in Javascript?
+Closure is the property through which the inner functions have access to the outer function variables and arguments even when the outer function has returned.
+
+function outer() {
+  var count = 1;
+  return function () {
+    console.log(count);
+    count++;
+  };
+}
+
+var temp = outer();
+temp(); // 1
+temp(); // 2
+temp(); // 3
+Note: if you want to check the closure property, copy-paste the entire code in the browser's console and then do console.dir(temp). Expand the function anonymous and then expand Scopes, you will be able to see the closure property over there which will have the count object.
+
+↥ back to top
+What is Currying in Javascript?
+Currying is the technique through which functions with multiple arguments are transformed into a series of nested functions with less number of arguments. It is very useful in event handling
+
+Without Currying
+
+function mult(a, b, c, d) {
+  return a * b * c * d;
+}
+
+mult(1, 2, 3, 4); // 24
+With Currying
+
+function mult(a) {
+  return function (b) {
+    return function (c) {
+      return function (d) {
+        return a * b * c * d;
+      };
+    };
+  };
+}
